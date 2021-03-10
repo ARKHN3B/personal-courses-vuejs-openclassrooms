@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VueJS - OpenClassRooms</title>
+</head>
+<body>
+<!-- 4) On utilise ici des accolades (syntaxe moustache) pour afficher le contenu de notre vairable message -->
+<div id="root">
+    <h1>{{ message }}</h1>
+    <section>
+        <h2>Panier</h2>
+        <ul>
+            <!-- 6) On utilise les directives de Vue qui commencent par un v- pour effectuer certaines tâches communes comme une condition, une boucle, etc -->
+            <li v-for="item in shoppingCart" v-if="item.cost">
+                <!-- 7) La directive v-bind permet d'attribuer un ou plusieurs attributs à une expression (cf. https://v3.vuejs.org/api/directives.html#v-bind) -->
+                <!-- On peut aussi utiliser la version raccourcie avec seulement les doubles points, v-bind:href deviendra :href -->
+                <a v-bind:href="item.url">{{ item.label }}</a>: {{ item.cost }}
+            </li>
+        </ul>
+        <p>Total: {{ totalAmount }}€</p>
+
+        <!-- 9) La directive v-on:[nom de l'événement] permet d'écouter des événements. Son raccourci s'écrit avec un @ -->
+        <button @click="changeModalDisplayStatus">Display Modal</button>
+        <!-- 8) La directive v-show permet de permuter la viibilité via la propriété display en CSS à la différence de la directive v-if qui elle, supprime
+                complètement l'élément du DOM -->
+        <div v-show="showModal" class="modal">...</div>
+
+        <h2>Horaires d'ouverture</h2>
+        <p>Dimanche: 10h - 16h</p>
+        <p>Du lundi au vendredi : 09h - 17h</p>
+        <p>Samedi : 09h30 - 18h00</p>
+
+        <form>
+            <div id="app">
+                <label for="username">Nom d'utilisateur</label>
+<!-- 11) La directive v-model permet de créer une liaison à deux chemins (two-way binding) sur une entrée de formulaire ou un composant -->
+                <input id="username" type="text" v-model="username" />
+                <label for="pw">Mot de passe</label>
+                <input id="pw" type="password" v-model="password" />
+            </div>
+        </form>
+
+        <h4>Bonjour {{ username||"" }}!</h4>
+    </section>
+</div>
+
+
+<!-- 1) Vue peut être chargé à partir d'un CDN -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+<script>
+  const app = new Vue({
+    el      : "#root", // 2) On attribue l'instance de l'application à l'élément qui porte l'id "root". Attention, impossible d'utiliser l'élément racine body
+    data    : { // 3) On ajoute des données à notre instance (il s'agit de données de configuration à l'image d'un store)
+      message       : "Voici notre première application Vue !",
+      costOfApples  : 0,
+      costOfBananas : 2,
+      costOfCoconuts: 8,
+      shoppingCart  : [
+        {
+          label: "Bananas",
+          cost : 2,
+          url  : "/bananas.html",
+        },
+        {
+          label: "Coconuts",
+          cost : 5,
+          url  : "/coconuts.html",
+        },
+        {
+          label: "Pineapple",
+          cost : 16,
+          url  : "/pineapple.html",
+        },
+      ],
+      showModal     : false,
+      username: '',
+      password: '',
+    },
+    computed: { // 5) La propriété "computed" permet de définir des valeurs calculées réutilsables (il s'agit toujours de fonctions)
+      // Attention ! On utilise pas de fonctions fléchées ici ! Cela réinitialiserait le contexte et casserait l'application car on a besoin de pointer vers l'instance de Vue,
+      // afin de faire référence aux propriétés de data.
+      totalAmount() {
+        return this.shoppingCart.reduce((acc, curr) => acc + curr.cost, 0);
+      }
+    },
+    methods : { // 10) La propriété methods permet de créer des méthodes réutilisables liées à la configuration
+      changeModalDisplayStatus() {
+        this.showModal = !this.showModal;
+      }
+    }
+  });
+</script>
+</body>
+</html>
