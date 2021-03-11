@@ -1,13 +1,26 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
+    <router-link to="/">Home</router-link>
+    |
+    <router-link to="/about">About</router-link>
+    |
     <!-- 07) Voici un lien de type routeur -->
     <router-link to="/item/croissant">Croissant</router-link>
   </div>
   <!-- 06) Voici le routeur et les composants associés qui seront rendus à l'intérieur -->
   <router-view/>
 </template>
+
+<script>
+// 08) Il est possible d'utiliser des hooks de cycle de vie en passant certaines fonctions spécifiques à VueJS
+// Cf. https://v3.vuejs.org/guide/instance.html#lifecycle-diagram
+export default {
+  beforeCreate() { console.log("Je ne suis pas encore créé") },
+  created() { console.log("Je suis créé") },
+  beforeMount() { console.log("Je vais bientôt être monté sur le DOM") },
+  mounted() { console.log("Je suis monté sur le DOM") },
+};
+</script>
 
 <style lang="scss">
 #app {
