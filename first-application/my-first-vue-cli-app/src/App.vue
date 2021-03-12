@@ -22,6 +22,7 @@ export default {
 };
 </script>
 
+<!-- 09) L'attribut lang permet d'utiliser des préprocesseurs CSS -->
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

@@ -9,6 +9,7 @@ export default {
 };
 </script>
 
+<!-- 10) Utiliser l'attribut scoped permet de limiter le bloc de style au composant tout en conservant les styles dits globaux -->
 <style scoped>
 
 </style>
